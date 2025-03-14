@@ -1,0 +1,64 @@
+.topbar_conteudo {
+    background-color: #000000;
+
+    position: fixed;
+    top: 0;
+
+    width: 100%;
+    height: 10vh;
+
+    display: flex;
+    justify-content: space-between;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
+}
+
+img {
+    transform: scale(1.4);
+    padding-left: 25px;
+}
+
+.topbar_botoes {
+    display: flex;
+}
+
+.botao_login {
+    background: none;
+    padding: 8px 16px;
+    border-radius: 20px; 
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.botao_cadastrar {
+    background-color: #25a745;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.botao_login:hover {
+    background-color: #ffffff33;
+}
+
+.botao_cadastrar:hover {
+    background-color: #1e8c3f;
+}
+
+.botao_login,
+.botao_cadastrar {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+    margin: 13px;
+    min-width: 130px;
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+
+}
