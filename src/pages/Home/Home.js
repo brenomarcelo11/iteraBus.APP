@@ -1,4 +1,4 @@
-import Mapa from '../../components/Mapa/Mapa'
+import Map from '../../components/Mapa/Map'
 import { Topbar } from '../../components/Topbar/Topbar'
 import style from './Home.module.css'
 
@@ -8,15 +8,14 @@ export function Home() {
             <Topbar />
             <div className={style.pagina_conteudo}>
                 <div className={style.texto_inicial}>
-                    <h1>
-                        <span className={style.spanBemVindo}>Bem-vindo!</span>
-                        <br />
-                        <span className={style.spanOnde}>Saiba aqui onde está</span>
-                        <br />
-                        <span className={style.spanLocal}>seu ônibus</span>
-                    </h1>
+                    <h1>Bem vindo! Saiba aqui onde está seu ônibus</h1>
                 </div>
-                <Mapa />
+                <div className={style.mapa}>
+                    <Map />
+                </div>
+                <select>
+                    
+                </select>
             </div>
         </>
     )
