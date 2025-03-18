@@ -20,7 +20,7 @@
 //     const zoom = 16;
 
 //     return (
-//         <LoadScript googleMapsApiKey='AIzaSyAmHRNO0iLmK2AnRpV9-l07p6xIqrW-xRI'>
+//         <LoadScript googleMapsApiKey=''>
 //             <div className={style.mapa}>
 //                 <GoogleMap
 //                     mapContainerStyle={mapContainerStyle}
