@@ -1,4 +1,4 @@
-import Map from '../../components/Mapa/Map'
+import MapBox from '../../components/Mapa/Mapbox'
 import { Topbar } from '../../components/Topbar/Topbar'
 import style from './Home.module.css'
 
@@ -11,11 +11,8 @@ export function Home() {
                     <h1>Bem vindo! Saiba aqui onde está seu ônibus</h1>
                 </div>
                 <div className={style.mapa}>
-                    <Map />
+                    <MapBox />
                 </div>
-                <select>
-                    
-                </select>
             </div>
         </>
     )

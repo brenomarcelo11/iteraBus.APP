@@ -1,6 +1,6 @@
 import { HTTPClient } from "./client";
 
-const OnibusApi = {
+const RotaApi = {
     async obterRotaPorIdAsync(rotaId) {
         try {
             const response = await HTTPClient.get(`/Rota/Obter/${rotaId}`);
@@ -62,6 +62,18 @@ const OnibusApi = {
             console.error("Erro ao deletar rota", error);
             throw error;
         }
+    },
+
+    async ObterPontoDeOnibusPorRotaIdAsync(rotaId)
+    {
+        try {
+            const response = await HTTPClient.get(`/Rota/ObterPorRotaId/${rotaId}`)
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao obter ponto por rotaId", error);
+            throw error;
+        }
+
     }
 }
 
