@@ -3,6 +3,7 @@ import mapboxgl from "mapbox-gl";
 import PontoDeOnibusApi from "../../services/PontoDeOnibusAPI";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import RotaApi from "../../services/rotaAPI";
+import style from './MapBox.module.css'
 
 mapboxgl.accessToken = "pk.eyJ1IjoiYnJlbm9tYXJjZWxvMTEiLCJhIjoiY204bmU1bnYzMTVlbDJscTBxN3FrNW52aCJ9.Wg_4Z19ssYuHRUOILuARTw";
 
@@ -15,38 +16,8 @@ const MapBox = () => {
   const [rotaSelecionada, setRotaSelecionada] = useState(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const markersRef = useRef([]);
-  const routeLayerRef = useRef(null);
-
-  const styles = {
-    container: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '80vh',
-      width: '100%',
-      margin: '0 auto',
-      border: '1px solid #ddd',
-      borderRadius: '8px',
-      overflow: 'hidden'
-    },
-    controlPanel: {
-      padding: '10px',
-      backgroundColor: '#f0f0f0',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '10px'
-    },
-    select: {
-      padding: '8px 12px',
-      borderRadius: '4px',
-      border: '1px solid #ccc',
-      fontSize: '16px',
-      minWidth: '200px'
-    },
-    mapContainer: {
-      flex: 1,
-      position: 'relative'
-    }
-  };
+  const busMarkerRef = useRef(null);
+  const busIntervalRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,6 +100,7 @@ const MapBox = () => {
   }, []);
 
   const updateMap = () => {
+    stopBusSimulation();
     clearMarkers();
     clearRoute();
 
@@ -185,6 +157,7 @@ const MapBox = () => {
           if (data.routes?.[0]) {
             addRouteToMap(data.routes[0].geometry);
             fitMapToRoute(pontosFiltrados);
+            startBusSimulation(data.routes[0].geometry.coordinates);
           }
         })
         .catch(err => console.error("Erro na rota:", err));
@@ -194,6 +167,74 @@ const MapBox = () => {
         center: [pontosFiltrados[0].longitude, pontosFiltrados[0].latitude],
         zoom: 14
       });
+    }
+  };
+
+  const startBusSimulation = (routeCoordinates) => {
+
+    stopBusSimulation();
+    console.log("🚍 Criando novo marcador de ônibus...");
+
+    const busIcon = document.createElement("div");
+    busIcon.style.width = "40px"; 
+    busIcon.style.height = "40px";
+    busIcon.style.backgroundImage = "url('https://www.svgrepo.com/show/107835/bus.svg')";
+    busIcon.style.backgroundSize = "cover";
+    busIcon.style.backgroundRepeat = "no-repeat";
+  
+    // Criando o marcador com o elemento personalizado
+    busMarkerRef.current = new mapboxgl.Marker({ element: busIcon })
+      .setLngLat(routeCoordinates[0])
+      .addTo(mapRef.current);
+
+    let index = 0;
+    const speed = 0.0100;
+
+    const moveToNextPoint = () => {
+      if (index >= routeCoordinates.length - 1) {
+        console.log("🏁 Ônibus chegou ao fim da rota.");
+        return;
+      }
+  
+      const start = routeCoordinates[index];
+      const end = routeCoordinates[index + 1];
+      let t = 0;
+  
+      console.log(`🛑 Parado no ponto ${index + 1} por 3 segundos...`);
+  
+      setTimeout(() => { // ⏳ Aguarda 3 segundos antes de se mover
+        busIntervalRef.current = setInterval(() => {
+          if (t >= 1) {
+            clearInterval(busIntervalRef.current);
+            index++;
+            moveToNextPoint(); // 🚍 Chama o próximo ponto após a movimentação
+          } else {
+            t += speed;
+            const newLng = start[0] + (end[0] - start[0]) * t;
+            const newLat = start[1] + (end[1] - start[1]) * t;
+  
+            if (busMarkerRef.current) {
+              busMarkerRef.current.setLngLat([newLng, newLat]);
+            }
+          }
+        }, 50);
+      }, 3000); // 🔥 Espera 3 segundos antes de se mover para o próximo ponto
+    };
+  
+    moveToNextPoint();
+  };
+
+  const stopBusSimulation = () => {
+    if (busIntervalRef.current) {
+      console.log("⛔ Simulação parada.");
+      clearInterval(busIntervalRef.current);
+      busIntervalRef.current = null;
+    }
+  
+    if (busMarkerRef.current) {
+      console.log("🗑️ Removendo marcador do ônibus...");
+      busMarkerRef.current.remove();
+      busMarkerRef.current = null;
     }
   };
 
@@ -215,8 +256,8 @@ const MapBox = () => {
           }
         },
         paint: {
-          'line-color': '#3b82f6',
-          'line-width': 4,
+          'line-color': '#25a745',
+          'line-width': 5,
           'line-opacity': 0.7
         }
       });
@@ -247,8 +288,8 @@ const MapBox = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.controlPanel}>
+    <div className={style.container}>
+      <div className={style.controlPanel}>
         <label htmlFor="rota-select">Selecione a rota:</label>
         <select
           id="rota-select"
@@ -265,7 +306,7 @@ const MapBox = () => {
         </select>
       </div>
       
-      <div ref={mapContainerRef} style={styles.mapContainer} />
+      <div ref={mapContainerRef} className={style.mapContainer} />
     </div>
   );
 };

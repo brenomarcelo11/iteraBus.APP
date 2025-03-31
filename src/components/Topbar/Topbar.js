@@ -1,6 +1,5 @@
 import style from "./Topbar.module.css"
 import Logo from '../../assets/4.svg'
-import Button from 'react-bootstrap/Button';
 
 export function Topbar() {
     return (
@@ -15,6 +14,5 @@ export function Topbar() {
                 <button className={style.botao_cadastrar}>Cadastre-se</button>
             </div>
         </div>
-
     )
 }
