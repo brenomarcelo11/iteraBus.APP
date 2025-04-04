@@ -1,0 +1,34 @@
+.topbar_conteudo {
+    background-color: #000000;
+
+    position: fixed;
+    top: 0;
+
+    width: 100%;
+    height: 10vh;
+
+    display: flex;
+    justify-content: space-between;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.445);
+}
+
+img {
+    transform: scale(1.4);
+    padding-left: 25px;
+}
+
+.botao_funcoes {
+    width: 15%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+    margin: 13px;
+    min-width: 130px;
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}

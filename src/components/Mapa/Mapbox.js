@@ -110,14 +110,14 @@ const MapBox = () => {
         const marker = new mapboxgl.Marker({
           element: createCustomMarker(ponto.rotaId)
         })
-        .setLngLat([ponto.longitude, ponto.latitude])
-        .setPopup(new mapboxgl.Popup().setHTML(`
+          .setLngLat([ponto.longitude, ponto.latitude])
+          .setPopup(new mapboxgl.Popup().setHTML(`
           <div style="padding: 8px;">
             <strong>${ponto.nome}</strong><br>
             <small>Rota ${ponto.rotaId}</small>
           </div>
         `))
-        .addTo(mapRef.current);
+          .addTo(mapRef.current);
 
         markersRef.current.push(marker);
       });
@@ -133,14 +133,14 @@ const MapBox = () => {
       const marker = new mapboxgl.Marker({
         element: createCustomMarker(ponto.rotaId)
       })
-      .setLngLat([ponto.longitude, ponto.latitude])
-      .setPopup(new mapboxgl.Popup().setHTML(`
+        .setLngLat([ponto.longitude, ponto.latitude])
+        .setPopup(new mapboxgl.Popup().setHTML(`
         <div style="padding: 8px;">
           <strong>${ponto.nome}</strong><br>
           <small>Rota ${ponto.rotaId}</small>
         </div>
       `))
-      .addTo(mapRef.current);
+        .addTo(mapRef.current);
 
       markersRef.current.push(marker);
     });
@@ -176,12 +176,12 @@ const MapBox = () => {
     console.log("🚍 Criando novo marcador de ônibus...");
 
     const busIcon = document.createElement("div");
-    busIcon.style.width = "40px"; 
+    busIcon.style.width = "40px";
     busIcon.style.height = "40px";
     busIcon.style.backgroundImage = "url('https://www.svgrepo.com/show/107835/bus.svg')";
     busIcon.style.backgroundSize = "cover";
     busIcon.style.backgroundRepeat = "no-repeat";
-  
+
     // Criando o marcador com o elemento personalizado
     busMarkerRef.current = new mapboxgl.Marker({ element: busIcon })
       .setLngLat(routeCoordinates[0])
@@ -195,13 +195,13 @@ const MapBox = () => {
         console.log("🏁 Ônibus chegou ao fim da rota.");
         return;
       }
-  
+
       const start = routeCoordinates[index];
       const end = routeCoordinates[index + 1];
       let t = 0;
-  
+
       console.log(`🛑 Parado no ponto ${index + 1} por 3 segundos...`);
-  
+
       setTimeout(() => { // ⏳ Aguarda 3 segundos antes de se mover
         busIntervalRef.current = setInterval(() => {
           if (t >= 1) {
@@ -212,7 +212,7 @@ const MapBox = () => {
             t += speed;
             const newLng = start[0] + (end[0] - start[0]) * t;
             const newLat = start[1] + (end[1] - start[1]) * t;
-  
+
             if (busMarkerRef.current) {
               busMarkerRef.current.setLngLat([newLng, newLat]);
             }
@@ -220,7 +220,7 @@ const MapBox = () => {
         }, 50);
       }, 3000); // 🔥 Espera 3 segundos antes de se mover para o próximo ponto
     };
-  
+
     moveToNextPoint();
   };
 
@@ -230,7 +230,7 @@ const MapBox = () => {
       clearInterval(busIntervalRef.current);
       busIntervalRef.current = null;
     }
-  
+
     if (busMarkerRef.current) {
       console.log("🗑️ Removendo marcador do ônibus...");
       busMarkerRef.current.remove();
@@ -267,9 +267,9 @@ const MapBox = () => {
   const fitMapToRoute = (pontos) => {
     const bounds = new mapboxgl.LngLatBounds();
     pontos.forEach(ponto => bounds.extend([ponto.longitude, ponto.latitude]));
-    mapRef.current.fitBounds(bounds, { 
+    mapRef.current.fitBounds(bounds, {
       padding: 50,
-      maxZoom: 15 
+      maxZoom: 15
     });
   };
 
@@ -304,8 +304,13 @@ const MapBox = () => {
             </option>
           ))}
         </select>
+          <p>
+            {rotaSelecionada
+              ? `${rotas.find((rota) => rota.id === rotaSelecionada)?.nome || "Desconhecida"}`
+              : "Nenhuma rota selecionada"}
+          </p>
       </div>
-      
+
       <div ref={mapContainerRef} className={style.mapContainer} />
     </div>
   );

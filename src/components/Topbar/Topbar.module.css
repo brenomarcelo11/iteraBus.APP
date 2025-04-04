@@ -62,3 +62,31 @@ img {
     border: 2px solid #ffffff;
 
 }
+
+.botao_deslogar{
+    text-decoration: none;
+    color: #25a745;
+    font-size: 3.5vh;
+
+    display: flex;
+    align-items: center;
+    
+    margin-right: 20px;
+}
+
+.mensagem {
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.nome_usuario {
+    text-decoration: none;
+    color: white;
+    margin-left: 5px;
+}
+
+.nome_usuario:hover {
+    color: #a8a0a0;
+}
