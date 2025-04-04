@@ -95,6 +95,7 @@ const UsuarioApi = {
             throw error;
         }
     },
+
     async restaurarAsync(usuarioId) {
         try {
             const response = await HTTPClient.put(`/Usuario/Restaurar/${usuarioId}`);
@@ -102,6 +103,28 @@ const UsuarioApi = {
         }
         catch (error) {
             console.error("Erro ao restaurar usuário", error);
+            throw error;
+        }
+    },
+
+    async favoritarRotaAsync(usuarioId, rotaId) {
+        try {
+            const response = await HTTPClient.post(`/Usuario/${usuarioId}/favoritar-rota/${rotaId}`);
+            return response.data;
+        }
+        catch (error) {
+            console.error("Erro ao favoritar rota", error);
+            throw error;
+        }
+    },
+
+    async desfavoritarRotaAsync(usuarioId, rotaId) {
+        try {
+            const response = await HTTPClient.delete(`/Usuario/${usuarioId}/desfavoritar-rota/${rotaId}`);
+            return response.data;
+        }
+        catch (error) {
+            console.error("Erro ao desfavoritar rota", error);
             throw error;
         }
     }

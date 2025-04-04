@@ -1,7 +1,6 @@
 import style from './EditarPerfil.module.css'
 import { Topbar } from '../../components/Topbar/Topbar'
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/esm/Button";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import UsuarioApi from '../../services/usuarioAPI';
@@ -12,9 +11,8 @@ import { AuthContext } from '../../hooks/AuthContext';
 const EditarPerfil = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
 
-    // const id = user?.id;
 
     const [id, setId] = useState(null);
     const [nome, setNome] = useState('');
@@ -32,11 +30,15 @@ const EditarPerfil = () => {
             try {
                 // Atualiza o usuário
                 await UsuarioApi.atualizarAsync(id, nome, email);
+                setUser((prevUser) => ({
+                    ...prevUser,
+                    name: nome
+                  }));
                 setAlertVariant('success'); // Alerta de sucesso
                 setAlertMessage('Usuário atualizado com sucesso!');
                 setShowAlert(true); // Exibe o alerta
                 setTimeout(() => {
-                    navigate('/usuarios'); // Redireciona após 3 segundos
+                    navigate('/'); // Redireciona após 3 segundos
                 }, 1000);
             } catch (error) {
                 console.error("Erro ao atualizar usuário", error);

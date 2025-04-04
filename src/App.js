@@ -6,6 +6,9 @@ import { Cadastro } from './pages/Cadastro/Cadastro';
 import Login from './pages/Login/Login';
 import { AuthProvider } from './hooks/AuthContext';
 import EditarPerfil from './pages/EditarPerfil/EditarPerfil';
+import HomeAdmin from './pages/HomeAdmin/HomeAdmin';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+
 
 function App() {
   return (
@@ -15,7 +18,25 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/editarperfil' element={<EditarPerfil />} />
+
+          {/* Rotas protegidas */}
+          <Route
+            path='/editarperfil'
+            element={
+              <ProtectedRoute>
+                <EditarPerfil />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/HomeAdmin'
+            element={
+              <ProtectedRoute>
+                <HomeAdmin />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
