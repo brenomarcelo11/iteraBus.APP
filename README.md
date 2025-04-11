@@ -15,22 +15,22 @@ Visualização, edição e cadastro de novas rotas
 Visualização, edição e cadastro de novos pontos de ônibus
 Autenticação de login com JWT
 
-5. Tecnologias Utilizadas
+4. Tecnologias Utilizadas
 Frontend: JavaScript, React
 Backend: C#, .NET Core, Entity Framework Core, JWT, Arquitetura em Camadas
 Banco de Dados: SQL Server
 Mapa: Mapbox GL JS (API Externa)
 
-6. Mapbox
+5. Mapbox
 O Mapbox é uma plataforma de mapeamento baseada em nuvem que fornece ferramentas poderosas para integrar mapas personalizados em aplicações web e mobile. Ele permite exibir mapas interativos com grande flexibilidade visual e funcional.
 
-7. Melhorias Futuras
+6. Melhorias Futuras
 - Implementar localização em tempo real do usuário
 - Conversão de coordenadas para endereços legíveis
 - Permitir o usuário favoritar rotas para melhor interação
 - Notificações sobre atrasos ou proximidade
 
-8. Conclusão
+7. Conclusão
 O iteraBus é uma solução prática e moderna para um problema comum no dia a dia de quem utiliza transporte público: a incerteza sobre a localização do ônibus.
 Com uma interface intuitiva e um mapa interativo em tempo real, o projeto oferece ao usuário mais controle, segurança e tranquilidade durante a espera no ponto.
 Através do uso de tecnologias como React, .NET, Mapbox e APIs REST, foi possível criar um sistema funcional, escalável e com grande potencial de evolução.
