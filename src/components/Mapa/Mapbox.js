@@ -4,6 +4,8 @@ import PontoDeOnibusApi from "../../services/PontoDeOnibusAPI";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import RotaApi from "../../services/rotaAPI";
 import style from './MapBox.module.css'
+import { useNavigate } from "react-router-dom";
+import { FaEdit } from 'react-icons/fa';
 
 mapboxgl.accessToken = "pk.eyJ1IjoiYnJlbm9tYXJjZWxvMTEiLCJhIjoiY204bmU1bnYzMTVlbDJscTBxN3FrNW52aCJ9.Wg_4Z19ssYuHRUOILuARTw";
 
@@ -18,6 +20,8 @@ const MapBox = () => {
   const markersRef = useRef([]);
   const busMarkerRef = useRef(null);
   const busIntervalRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +68,38 @@ const MapBox = () => {
   }, [mapLoaded, rotaSelecionada, pontosDeOnibus]);
 
   const createCustomMarker = (rotaId) => {
-    const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+    const colors = [
+      '#FF0000', 
+      '#0000FF', 
+      '#00FF00', 
+      '#FFFF00',
+      '#FF00FF',
+      '#00FFFF', 
+      '#FFA500', 
+      '#800080', 
+      '#008000', 
+      '#000080',
+      '#808000',
+      '#FFC0CB',
+      '#A52A2A', 
+      '#4B0082',
+      '#FF1493',
+      '#1E90FF',
+      '#32CD32', 
+      '#FFD700', 
+      '#DC143C',
+      '#00CED1',
+      '#8A2BE2',  
+      '#7FFF00',
+      '#B22222',
+      '#ADFF2F',
+      '#FF4500',
+      '#2E8B57',
+      '#20B2AA',
+      '#FF69B4', 
+      '#6A5ACD',
+      '#40E0D0' 
+    ];
     const color = colors[rotaId % colors.length];
 
     const el = document.createElement('div');
@@ -188,7 +223,7 @@ const MapBox = () => {
       .addTo(mapRef.current);
 
     let index = 0;
-    const speed = 0.0100;
+    const speed = 0.0015;
 
     const moveToNextPoint = () => {
       if (index >= routeCoordinates.length - 1) {
@@ -200,14 +235,12 @@ const MapBox = () => {
       const end = routeCoordinates[index + 1];
       let t = 0;
 
-      console.log(`🛑 Parado no ponto ${index + 1} por 3 segundos...`);
-
-      setTimeout(() => { // ⏳ Aguarda 3 segundos antes de se mover
+      setTimeout(() => { // Aguarda 3 segundos antes de se mover
         busIntervalRef.current = setInterval(() => {
           if (t >= 1) {
             clearInterval(busIntervalRef.current);
             index++;
-            moveToNextPoint(); // 🚍 Chama o próximo ponto após a movimentação
+            moveToNextPoint(); // Chama o próximo ponto após a movimentação
           } else {
             t += speed;
             const newLng = start[0] + (end[0] - start[0]) * t;
@@ -218,7 +251,7 @@ const MapBox = () => {
             }
           }
         }, 50);
-      }, 3000); // 🔥 Espera 3 segundos antes de se mover para o próximo ponto
+      }, 3000); // Espera 3 segundos antes de se mover para o próximo ponto
     };
 
     moveToNextPoint();
@@ -226,13 +259,11 @@ const MapBox = () => {
 
   const stopBusSimulation = () => {
     if (busIntervalRef.current) {
-      console.log("⛔ Simulação parada.");
       clearInterval(busIntervalRef.current);
       busIntervalRef.current = null;
     }
 
     if (busMarkerRef.current) {
-      console.log("🗑️ Removendo marcador do ônibus...");
       busMarkerRef.current.remove();
       busMarkerRef.current = null;
     }
@@ -290,25 +321,28 @@ const MapBox = () => {
   return (
     <div className={style.container}>
       <div className={style.controlPanel}>
-        <label htmlFor="rota-select">Selecione a rota:</label>
+        <label htmlFor="rota-select"></label>
         <select
           id="rota-select"
           value={rotaSelecionada || ""}
           onChange={(e) => setRotaSelecionada(Number(e.target.value))}
           style={{ padding: "8px", marginLeft: "10px" }}
         >
-          <option value="">-- Selecione --</option>
+          <option value="">-- Selecione a rota --</option>
           {rotas.map((rota) => (
             <option key={rota.id} value={rota.id}>
               {rota.nome}
             </option>
           ))}
         </select>
-          <p>
-            {rotaSelecionada
-              ? `${rotas.find((rota) => rota.id === rotaSelecionada)?.nome || "Desconhecida"}`
-              : "Nenhuma rota selecionada"}
-          </p>
+        {rotaSelecionada > 0 && (
+          <FaEdit
+            className={style.botao_editar}
+            title="Editar rota"
+            size={20}
+            onClick={() => navigate(`/editar-rota/${rotaSelecionada}`)}
+          />
+        )}
       </div>
 
       <div ref={mapContainerRef} className={style.mapContainer} />

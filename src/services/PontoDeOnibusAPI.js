@@ -23,12 +23,13 @@ const PontoDeOnibusApi = {
         }
     },
 
-    async adicionarPontoAsync(latitude, longitude, nome) {
+    async adicionarPontoAsync(latitude, longitude, nome, rotaId) {
         try {
             const PontoDeOnibusCriar = {
                 Latitude: latitude,
                 Longitude: longitude,
-                Nome: nome
+                Nome: nome,
+                RotaId: rotaId
             };
             const response = await HTTPClient.post(`/PontoDeOnibus/Adicionar`, PontoDeOnibusCriar);
             return response.data;

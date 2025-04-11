@@ -1,0 +1,71 @@
+/* Garante que a página ocupe toda a tela */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.pagina_conteudo {
+    width: 100%;
+    height: 100vh; /* Ocupa 100% da altura da tela */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    background-color: #f4f4f4; /* Cor de fundo para destaque */
+}
+
+.form_container {
+    flex: 1; /* Faz o formulário ocupar o máximo possível */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    align-items: center; /* Centraliza horizontalmente */
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.alertContainer {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 100%;
+    max-width: 350px;
+}
+
+.botoes_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+}
+
+.botao_salvar, 
+.botao_cancelar {
+    width: 48%;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: white;
+    border: none;
+    text-align: center;
+}
+
+.botao_salvar {
+    background-color: #25a745;
+}
+
+.botao_salvar:hover {
+    background-color: #1e8e3e;
+}
+
+.botao_cancelar {
+    background-color: #dc3545;
+}
+
+.botao_cancelar:hover {
+    background-color: #bb2d3b;
+}

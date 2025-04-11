@@ -13,6 +13,7 @@
   padding: 10px;
   background-color: #f0f0f0;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 
@@ -36,4 +37,9 @@
 .mapContainer {
   flex: 1;
   position: relative;
+}
+
+.botao_editar {
+  cursor: pointer;
+  color: #25a745;
 }

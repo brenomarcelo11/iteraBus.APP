@@ -8,6 +8,9 @@ import { AuthProvider } from './hooks/AuthContext';
 import EditarPerfil from './pages/EditarPerfil/EditarPerfil';
 import HomeAdmin from './pages/HomeAdmin/HomeAdmin';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import AdicionarRota from './pages/AdicionarRota/AdicionarRota';
+import AdicionarPonto from './pages/AdicionarPonto/AdicionarPonto';
+import EditarRota from './pages/EditarRota/EditarRota';
 
 
 function App() {
@@ -34,6 +37,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <HomeAdmin />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/adicionar-rota'
+            element={
+              <ProtectedRoute>
+                <AdicionarRota />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/adicionar-ponto'
+            element={
+              <ProtectedRoute>
+                <AdicionarPonto />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/editar-rota/:id'
+            element={
+              <ProtectedRoute>
+                <EditarRota />
               </ProtectedRoute>
             }
           />

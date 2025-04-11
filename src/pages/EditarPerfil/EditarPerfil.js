@@ -1,26 +1,28 @@
 import style from './EditarPerfil.module.css'
 import { Topbar } from '../../components/Topbar/Topbar'
 import Form from "react-bootstrap/Form";
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
 import UsuarioApi from '../../services/usuarioAPI';
 import Alert from 'react-bootstrap/Alert';
 import { MdCancel, MdOutlineSave } from 'react-icons/md';
 import { AuthContext } from '../../hooks/AuthContext';
 
 const EditarPerfil = () => {
-    const location = useLocation();
     const navigate = useNavigate();
-    const { user, setUser } = useContext(AuthContext);
+    // const { user, setUser, isLoading } = useContext(AuthContext);
+    const {setUser} = React.useContext(AuthContext)
+    const location = useLocation();
+    const state = location.state; // Aqui você acessa o state passado
+    const id = state?.id;
 
-
-    const [id, setId] = useState(null);
+    // const [id, setId] = useState(null);
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [showAlert, setShowAlert] = useState(false); // Estado para controlar o alerta
-    const [alertVariant, setAlertVariant] = useState('success'); // Estado para o tipo de alerta
-    const [alertMessage, setAlertMessage] = useState(''); // Estado para a mensagem do alerta
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertVariant, setAlertVariant] = useState('success');
+    const [alertMessage, setAlertMessage] = useState('');
+    const [loading, setLoading] = useState(true);
 
 
     const handleSubmit = async (e) => {
@@ -28,63 +30,69 @@ const EditarPerfil = () => {
 
         if (isFormValid()) {
             try {
-                // Atualiza o usuário
-                await UsuarioApi.atualizarAsync(id, nome, email);
-                setUser((prevUser) => ({
-                    ...prevUser,
-                    name: nome
-                  }));
-                setAlertVariant('success'); // Alerta de sucesso
+                await UsuarioApi.atualizarAsync(id, nome, email); // apenas faz a atualização
+
+                // busca os dados atualizados
+                const usuarioAtualizado = await UsuarioApi.obterAsync(id);
+
+                console.log("Usuário atualizado com dados completos:", usuarioAtualizado);
+
+                setUser({
+                    id: usuarioAtualizado.id,
+                    name: usuarioAtualizado.nome,
+                    email: usuarioAtualizado.email,
+                });
+
+                setAlertVariant('success');
                 setAlertMessage('Usuário atualizado com sucesso!');
-                setShowAlert(true); // Exibe o alerta
+                setShowAlert(true);
                 setTimeout(() => {
-                    navigate('/'); // Redireciona após 3 segundos
+                    navigate('/');
                 }, 1000);
             } catch (error) {
                 console.error("Erro ao atualizar usuário", error);
-                setAlertVariant('danger'); // Alerta de erro
+                setAlertVariant('danger');
                 setAlertMessage('Erro ao atualizar usuário. Tente novamente.');
-                setShowAlert(true); // Exibe o alerta
+                setShowAlert(true);
             }
         } else {
-            setAlertVariant('danger'); // Alerta de erro
+            setAlertVariant('danger');
             setAlertMessage('Por favor, preencha todos os campos corretamente.');
-            setShowAlert(true); // Exibe o alerta
+            setShowAlert(true);
         }
+
+        
     };
+
 
     const handleCancelar = () => {
         navigate('/');
     }
 
     useEffect(() => {
-        if (user?.id) {
-            setId(user.id);
-        } else {
-            console.warn("ID do usuário ainda não disponível no contexto.");
-        }
-    }, [user]);
-
-    useEffect(() => {
-        if (!id) return;
-
-        console.log("🔍 Buscando dados do usuário com ID:", id);
-
-        const buscarDadosUsuario = async () => {
-            try {
-                const usuario = await UsuarioApi.obterAsync(id);
-                setNome(usuario.nome || '');
-                setEmail(usuario.email || '');
-            } catch (error) {
-                console.error('❌ Erro ao buscar dados do usuário:', error);
-            }
+        const carregarDadosUsuario = async () => {
+                // setId(user.id);
+                // // Se os dados no context já estão completos
+                // if (user.nome && user.email) {
+                //     setNome(user.nome);
+                //     setEmail(user.email);
+                // } else {
+                    // Senão, busca na API os dados completos
+                    try {
+                        const usuarioCompleto = await UsuarioApi.obterAsync(id);
+                        setNome(usuarioCompleto.nome || '');
+                        setEmail(usuarioCompleto.email || '');
+                    } catch (error) {
+                        console.error('Erro ao buscar dados completos do usuário:', error);
+                    }
+                setLoading(false); // marca como carregado
         };
+        carregarDadosUsuario();
+    }, []);
 
-        buscarDadosUsuario();
-    }, [id]);
 
     const isFormValid = () => {
-        return nome && email;
+        return id && nome && email;
     };
 
     return (
@@ -92,42 +100,45 @@ const EditarPerfil = () => {
             <Topbar />
             <div className={style.pagina_conteudo}>
                 <h3>Editar Usuário</h3>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId='formNome' className='mb-3'>
-                        <Form.Label>Nome</Form.Label>
-                        <Form.Control
-                            type='text'
-                            placeholder='Digite seu nome'
-                            name='nome'
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
+                {!loading ? (
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId='formNome' className='mb-3'>
+                            <Form.Label>Nome</Form.Label>
+                            <Form.Control
+                                type='text'
+                                placeholder='Digite seu nome'
+                                name='nome'
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
 
-                    <Form.Group controlId='formEmail' className='mb-3'>
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type='email'
-                            placeholder='Digite seu email'
-                            name='email'
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </Form.Group>
+                        <Form.Group controlId='formEmail' className='mb-3'>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                                type='email'
+                                placeholder='Digite seu email'
+                                name='email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </Form.Group>
 
-                    <div className={style.botoes_container}>
-                        <button className={style.botao_salvar} type='submit' disabled={!isFormValid()}>
-                            <MdOutlineSave /> Salvar
-                        </button>
-                        <button className={style.botao_cancelar} type='button' onClick={handleCancelar}>
-                            <MdCancel /> Cancelar
-                        </button>
-                    </div>
-                </Form>
+                        <div className={style.botoes_container}>
+                            <button className={style.botao_salvar} type='submit' disabled={!isFormValid()}>
+                                <MdOutlineSave /> Salvar
+                            </button>
+                            <button className={style.botao_cancelar} type='button' onClick={handleCancelar}>
+                                <MdCancel /> Cancelar
+                            </button>
+                        </div>
+                    </Form>
+                ) : (
+                    <p>Carregando dados do usuário...</p>
+                )}
 
-                {/* Alerta personalizado */}
                 {showAlert && (
                     <div className={style.alertContainer}>
                         <Alert variant={alertVariant} onClose={() => setShowAlert(false)} dismissible>
@@ -137,7 +148,7 @@ const EditarPerfil = () => {
                 )}
             </div>
         </>
-    )
-}
+    );
+};
 
 export default EditarPerfil;

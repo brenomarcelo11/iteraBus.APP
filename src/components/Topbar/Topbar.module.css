@@ -60,7 +60,6 @@ img {
     text-align: center;
     color: #ffffff;
     border: 2px solid #ffffff;
-
 }
 
 .botao_deslogar{
@@ -90,3 +89,74 @@ img {
 .nome_usuario:hover {
     color: #a8a0a0;
 }
+
+.botao_acao {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px; 
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+    margin: 13px;
+    min-width: 150px;
+    text-align: center;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    align-items: center;
+}
+
+.botoes_acoes {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.alertaOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent; /* sem fundo escuro */
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none; /* deixa o clique passar por trás */
+  }
+  
+  .alertaBox {
+    margin-top: 20px;
+    background-color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    pointer-events: all; /* permite clicar nos botões */
+  }
+  
+  .alertaBotoes {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  
+  .botaoSim {
+    background-color: #25a745;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .botaoNao {
+    background-color: #e5e7eb;
+    color: #111827;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  

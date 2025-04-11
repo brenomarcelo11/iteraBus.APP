@@ -12,7 +12,7 @@ export function Cadastro() {
     const navigate = useNavigate();
 
     async function handleCadastro(event) {
-        event.preventDefault(); // Evita o reload da página
+        event.preventDefault();
         setErro("");
     
         try {
