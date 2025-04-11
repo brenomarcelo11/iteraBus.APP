@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+Documentação
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Introdução
+O iteraBus é um sistema de rastreamento de ônibus em tempo real, desenvolvido como projeto de conclusão de curso. A aplicação permite acompanhar a localização dos ônibus em um mapa, visualizar rotas e acessar informações relevantes para facilitar o deslocamento dos usuários. O sistema conta com uma API desenvolvida em .NET Core, banco de dados com Entity Framework e um front-end em React.
 
-## Available Scripts
+2. Objetivo
+O iteraBus foi criado para resolver um problema comum enfrentado por usuários de transporte público: a falta de informações em tempo real sobre a localização dos ônibus.
+Com o sistema, o usuário que está no ponto de ônibus consegue visualizar no mapa onde está o ônibus da sua linha, se ele está próximo ou ainda em qual trajeto está naquele momento, trazendo mais previsibilidade, segurança e eficiência no tempo de espera.
 
-In the project directory, you can run:
+3. Funcionalidades
+Visualização em tempo real dos ônibus no mapa
+Filtro de rotas
+Seleção de rotas por pontos de ônibus
+Visualização, edição e cadastro de novas rotas
+Visualização, edição e cadastro de novos pontos de ônibus
+Autenticação de login com JWT
 
-### `npm start`
+5. Tecnologias Utilizadas
+Frontend: JavaScript, React
+Backend: C#, .NET Core, Entity Framework Core, JWT, Arquitetura em Camadas
+Banco de Dados: SQL Server
+Mapa: Mapbox GL JS (API Externa)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+6. Mapbox
+O Mapbox é uma plataforma de mapeamento baseada em nuvem que fornece ferramentas poderosas para integrar mapas personalizados em aplicações web e mobile. Ele permite exibir mapas interativos com grande flexibilidade visual e funcional.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+7. Melhorias Futuras
+- Implementar localização em tempo real do usuário
+- Conversão de coordenadas para endereços legíveis
+- Permitir o usuário favoritar rotas para melhor interação
+- Notificações sobre atrasos ou proximidade
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+8. Conclusão
+O iteraBus é uma solução prática e moderna para um problema comum no dia a dia de quem utiliza transporte público: a incerteza sobre a localização do ônibus.
+Com uma interface intuitiva e um mapa interativo em tempo real, o projeto oferece ao usuário mais controle, segurança e tranquilidade durante a espera no ponto.
+Através do uso de tecnologias como React, .NET, Mapbox e APIs REST, foi possível criar um sistema funcional, escalável e com grande potencial de evolução.
+O iteraBus reforça como a tecnologia pode ser aplicada de forma acessível e inteligente para facilitar a mobilidade urbana e melhorar a experiência do cidadão.
