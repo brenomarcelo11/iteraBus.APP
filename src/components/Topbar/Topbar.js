@@ -19,16 +19,26 @@ export function Topbar() {
             <div className={style.topbar_botoes}>
                 {user ? (
                     <>
+                        <div className={style.botoes_acoes}>
+                            <button className={style.botao_acao} onClick={() => navigate('/adicionar-rota')}>
+                                Nova Rota
+                            </button>
+                            <button className={style.botao_acao} onClick={() => navigate('/adicionar-ponto')}>
+                                Novo Ponto
+                            </button>
+                        </div>
+
                         <div className={style.mensagem}>
                             <span>Olá, </span>
                             <Link
                                 to="/editarperfil"
-                                state={{ id: user.id }} // Passando o ID do usuário
+                                state={{ id: Number(user.id) }} // Passando o ID do usuário
                                 className={style.nome_usuario}
                             >
                                 {user.name}
                             </Link>
                         </div>
+
                         <Link
                             className={style.botao_deslogar}
                             onClick={() => { logout(); navigate('/login'); }}>

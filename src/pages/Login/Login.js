@@ -2,11 +2,11 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
 import Logo from "../../assets/1.svg";
-import { AuthContext } from "../../hooks/AuthContext"; // Importando o contexto de autenticação
+import { AuthContext } from "../../hooks/AuthContext";
 
 const Login = () => {
     const navigate = useNavigate(); 
-    const { setUser } = useContext(AuthContext); // Pegando a função para atualizar o usuário
+    const { setUser } = useContext(AuthContext);
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -40,7 +40,7 @@ const Login = () => {
                     console.log("✅ Dados do usuário:", userData);
 
                     // 🔥 Atualiza o contexto com os dados do usuário
-                    setUser({ name: userData.nome });
+                    setUser({ id: userData.id, name: userData.nome, email: userData.email });
 
                     // 🔥 Decide para onde redirecionar o usuário
                     const roleResponse = await fetch("http://localhost:5201/api/Auth/user-role", {
