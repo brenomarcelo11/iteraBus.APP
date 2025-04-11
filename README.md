@@ -67,7 +67,8 @@ Com ele, é possível:
 - Implementar **localização em tempo real do usuário**  
 - **Converter coordenadas (latitude e longitude) em endereços legíveis**  
 - Permitir que o usuário **favorite rotas** para acesso rápido  
-- Enviar **notificações sobre atrasos ou proximidade** dos ônibus  
+- Enviar **notificações sobre atrasos ou proximidade** dos ônibus
+- Implementar **inteligência artificial** para estimativa de tempo de um ponto ao outro  
 
 ---
 
